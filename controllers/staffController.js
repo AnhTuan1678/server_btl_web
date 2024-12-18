@@ -54,7 +54,7 @@ const updateItem = async (req, res) => {
     );
 
     res.status(200).send({ success: true, message: 'Item updated successfully' });
-    await fetch('https://int3306.freeddns.org//adLogs//activity-logs', {
+    await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ const addItem = async (req, res) => {
       contributor_name,
     ]);
     res.status(201).json({ success: true, message: 'Item added successfully' });
-    await fetch('https://int3306.freeddns.org//adLogs//activity-logs', {
+    await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -127,7 +127,7 @@ const deleteItem = async (req, res) => {
     const query = 'DELETE FROM items WHERE id = ?';
     await db.execute(query, [id]);
     res.status(200).json({ success: true, message: 'Item deleted successfully' });
-    await fetch('https://int3306.freeddns.org//adLogs//activity-logs', {
+    await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -204,7 +204,7 @@ const useItem = async (req, res) => {
         success: true,
         message: 'Item partially used and split successfully',
       });
-      await fetch('https://int3306.freeddns.org//adLogs//activity-logs', {
+      await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

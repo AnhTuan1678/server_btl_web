@@ -241,7 +241,7 @@ const updateItem = async (req, res) => {
     );
 
     res.status(200).send({ success: true, message: 'Item updated successfully' });
-    await fetch('https://int3306.freeddns.org//adLogs//activity-logs', {
+    await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

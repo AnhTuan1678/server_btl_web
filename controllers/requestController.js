@@ -66,7 +66,7 @@ const updateStatus = async (req, res) => {
     }
 
     res.json({ message: 'Status updated successfully' });
-    await fetch('https://int3306.freeddns.org//adLogs//activity-logs', {
+    await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
