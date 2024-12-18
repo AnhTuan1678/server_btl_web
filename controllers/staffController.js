@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const db = require('../config/db');
 const { post } = require('../routes/authRoutes');
+const {addLogAction} = require('./logsController');
 
 //Lấy danh sách vật phẩm theo kho
 const getItems = async (req, res) => {
@@ -53,18 +54,13 @@ const updateItem = async (req, res) => {
       [name, quantity, unit, expiration_date, category, itemId]
     );
 
-    await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_id: req.user.id,
-        action: 'update',
-        table_name: 'items',
-        record_id: itemId,
-      }),
-    });
+    const logData = {
+      user_id: req.user.id,
+      action: 'update',
+      table_name: 'items',
+      record_id: itemId,
+    };
+    await addLogAction(logData);
 
     res.status(200).send({ success: true, message: 'Item updated successfully' });
   } catch (error) {
@@ -103,18 +99,13 @@ const addItem = async (req, res) => {
       contributor_name,
     ]);
 
-    await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_id: req.user.id,
-        action: 'insert',
-        table_name: 'items',
-        record_id: result.insertId,
-      }),
-    });
+    const data = {
+      user_id: req.user.id,
+      action: 'insert',
+      table_name: 'items',
+      record_id: result.insertId,
+    };
+    await addLogAction(data);
 
     res.status(201).json({ success: true, message: 'Item added successfully' });
   } catch (err) {
@@ -130,18 +121,13 @@ const deleteItem = async (req, res) => {
     const query = 'DELETE FROM items WHERE id = ?';
     await db.execute(query, [id]);
 
-    await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_id: req.user.id,
-        action: 'delete',
-        table_name: 'items',
-        record_id: id,
-      }),
-    });
+    const logData = {
+      user_id: req.user.id,
+      action: 'delete',
+      table_name: 'items',
+      record_id: id,
+    };
+    await addLogAction(logData);
 
     res.status(200).json({ success: true, message: 'Item deleted successfully' });
   } catch (err) {
@@ -205,18 +191,13 @@ const useItem = async (req, res) => {
         ]
       );
 
-      await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user_id: req.user.id,
-          action: 'update',
-          table_name: 'items',
-          record_id: itemId,
-        }),
-      });
+      const logData = {
+        user_id: req.user.id,
+        action: 'update',
+        table_name: 'items',
+        record_id: itemId,
+      };
+      await addLogAction(logData);
 
       res.status(200).send({
         success: true,

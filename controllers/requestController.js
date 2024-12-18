@@ -1,5 +1,6 @@
 const db = require('../config/db');
 const bcrypt = require('bcrypt');
+const { addLogAction } = require('./logsController');
 
 const getRequestByStatus = async (req, res) => {
   const { status } = req.query;
@@ -65,18 +66,13 @@ const updateStatus = async (req, res) => {
       return res.status(404).json({ message: 'Relief request not found' });
     }
 
-    await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_id: req.user.id,
-        action: 'update',
-        table_name: 'relief_areas',
-        record_id: id,
-      }),
-    });
+    const logData = {
+      user_id: req.user.id,
+      action: 'update',
+      table_name: 'relief_areas',
+      record_id: id,
+    };
+    await addLogAction(logData);
 
     res.json({ message: 'Status updated successfully' });
   } catch (err) {

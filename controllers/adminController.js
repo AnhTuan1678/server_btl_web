@@ -1,6 +1,6 @@
 const db = require('../config/db');
 const bcrypt = require('bcrypt');
-const { addLog } = require('./logsController');
+const { addLogAction } = require('./logsController');
 
 // Lấy danh sách kho
 const getWarehouses = async (req, res) => {
@@ -240,18 +240,13 @@ const updateItem = async (req, res) => {
       [name, quantity, unit, expiration_date, category, itemId]
     );
 
-    await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_id: req.user.id,
-        action: 'update',
-        table_name: 'items',
-        record_id: itemId,
-      }),
-    });
+    const data = {
+      user_id: req.user.id,
+      action: 'update',
+      table_name: 'items',
+      record_id: itemId,
+    };
+    const logInfo = await addLogAction(data);
 
     res.status(200).send({ success: true, message: 'Item updated successfully' });
   } catch (error) {
