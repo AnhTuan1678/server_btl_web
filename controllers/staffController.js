@@ -53,7 +53,7 @@ const updateItem = async (req, res) => {
       [name, quantity, unit, expiration_date, category, itemId]
     );
 
-    await fetch('http://localhost:5001/adLogs//activity-logs', {
+    await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ const addItem = async (req, res) => {
       contributor_name,
     ]);
 
-    await fetch('http://localhost:5001/adLogs//activity-logs', {
+    await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ const deleteItem = async (req, res) => {
     const query = 'DELETE FROM items WHERE id = ?';
     await db.execute(query, [id]);
 
-    await fetch('http://localhost:5001/adLogs//activity-logs', {
+    await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -205,7 +205,7 @@ const useItem = async (req, res) => {
         ]
       );
 
-      await fetch('http://localhost:5001/adLogs//activity-logs', {
+      await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
