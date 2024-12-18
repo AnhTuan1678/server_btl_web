@@ -240,8 +240,7 @@ const updateItem = async (req, res) => {
       [name, quantity, unit, expiration_date, category, itemId]
     );
 
-    res.status(200).send({ success: true, message: 'Item updated successfully' });
-    await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
+    await fetch('http://localhost:5001/adLogs//activity-logs', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -253,6 +252,8 @@ const updateItem = async (req, res) => {
         record_id: itemId,
       }),
     });
+
+    res.status(200).send({ success: true, message: 'Item updated successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).send({ success: false, message: 'Error updating item', error });

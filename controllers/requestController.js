@@ -65,8 +65,7 @@ const updateStatus = async (req, res) => {
       return res.status(404).json({ message: 'Relief request not found' });
     }
 
-    res.json({ message: 'Status updated successfully' });
-    await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
+    await fetch('http://localhost:5001/adLogs//activity-logs', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -78,6 +77,8 @@ const updateStatus = async (req, res) => {
         record_id: id,
       }),
     });
+
+    res.json({ message: 'Status updated successfully' });
   } catch (err) {
     res.status(500).json({ message: 'Database error', error: err });
   }

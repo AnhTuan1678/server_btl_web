@@ -208,8 +208,7 @@ const updateItem = async (req, res) => {
       [name, quantity, unit, expiration_date, category, itemId]
     );
 
-    res.status(200).send({ success: true, message: 'Item updated successfully' });
-    await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
+    await fetch('http://localhost:5001/adLogs//activity-logs', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -221,6 +220,8 @@ const updateItem = async (req, res) => {
         record_id: itemId,
       }),
     });
+
+    res.status(200).send({ success: true, message: 'Item updated successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).send({ success: false, message: 'Error updating item', error });
@@ -259,8 +260,8 @@ const addItem = async (req, res) => {
       warehouse_id,
       contributor_name,
     ]);
-    res.status(201).json({ success: true, message: 'Item added successfully' });
-    await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
+
+    await fetch('http://localhost:5001/adLogs//activity-logs', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -272,6 +273,8 @@ const addItem = async (req, res) => {
         record_id: result.insertId,
       }),
     });
+
+    res.status(201).json({ success: true, message: 'Item added successfully' });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: 'Error adding item' });
@@ -284,8 +287,8 @@ const deleteItem = async (req, res) => {
   try {
     const query = 'DELETE FROM items WHERE id = ?';
     await db.execute(query, [id]);
-    res.status(200).json({ success: true, message: 'Item deleted successfully' });
-    await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
+
+    await fetch('http://localhost:5001/adLogs//activity-logs', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -297,6 +300,8 @@ const deleteItem = async (req, res) => {
         record_id: id,
       }),
     });
+
+    res.status(200).json({ success: true, message: 'Item deleted successfully' });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: 'Error deleting item' });
@@ -358,11 +363,7 @@ const useItem = async (req, res) => {
         ]
       );
 
-      res.status(200).send({
-        success: true,
-        message: 'Item partially used and split successfully',
-      });
-      await fetch('http://fall2024c8g5.int3306.freeddns.org//adLogs//activity-logs', {
+      await fetch('http://localhost:5001/adLogs//activity-logs', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -373,6 +374,11 @@ const useItem = async (req, res) => {
           table_name: 'items',
           record_id: itemId,
         }),
+      });
+
+      res.status(200).send({
+        success: true,
+        message: 'Item partially used and split successfully',
       });
     } catch (error) {
       console.error(error);

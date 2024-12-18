@@ -1,7 +1,6 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config({ path: './main.env' });
 
-// const host = $MYSQL_SERVICE_HOST; hoặc process.env.DB_HOST
 const config = {
   host: process.env.MYSQL_SERVICE_HOST || process.env.DB_HOST,
   user: process.env.DB_USER,
