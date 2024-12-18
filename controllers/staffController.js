@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const db = require('../config/db');
 const { post } = require('../routes/authRoutes');
-const {addLogAction} = require('./logsController');
+const { addLogAction } = require('./logsController');
 
 //Lấy danh sách vật phẩm theo kho
 const getItems = async (req, res) => {

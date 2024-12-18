@@ -16,41 +16,24 @@ const addLogAction = async data => {
   return result;
 };
 
-// API tạo log hoạt động
+// API tạo log hoạt động sử dụng addLogAction
 const addLog = async (req, res) => {
   try {
-    const { user_id, action, table_name, record_id } = req.body;
-
-    // Validate dữ liệu đầu vào
-    if (!user_id || !action || !table_name || !record_id) {
-      return res.status(400).json({
-        status: 'error',
-        message: 'Thiếu thông tin bắt buộc',
+    const result = await addLogAction(req.body);
+    if (result.affectedRows) {
+      return res.status(201).json({
+        status: 'success',
+        message: 'Đã lưu log thành công',
+        data: {
+          id: result.insertId,
+          ...req.body,
+          created_at: new Date(),
+        },
       });
     }
-
-    // Query để insert log
-    const query = `
-            INSERT INTO logs 
-            (user_id, action, table_name, record_id, created_at) 
-            VALUES (?, ?, ?, ?, NOW())
-        `;
-
-    // Thực hiện query
-    const [result] = await db.query(query, [user_id, action, table_name, record_id]);
-
-    // Trả về kết quả
-    res.status(201).json({
-      status: 'success',
-      message: 'Đã lưu log thành công',
-      data: {
-        id: result.insertId,
-        user_id,
-        action,
-        table_name,
-        record_id,
-        created_at: new Date(),
-      },
+    res.status(500).json({
+      status: 'error',
+      message: 'Lỗi server',
     });
   } catch (error) {
     console.error(error);
